@@ -1,0 +1,44 @@
+name: Deploy Pages (with Git LFS)
+
+on:
+  push:
+    branches: [ main ]       # 如果默认分支不是 main，改成你的分支
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (with LFS)
+        uses: actions/checkout@v4
+        with:
+          lfs: true          # 关键：把 LFS 真文件拉下来
+          fetch-depth: 0
+
+      - name: Pull LFS (double check)
+        run: git lfs pull    # 双保险，确保指针替换成真实二进制
+
+      # 如果是纯静态站点，无需构建，直接把仓库根目录打包
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./           # 这里指向站点根目录（仓库根）
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

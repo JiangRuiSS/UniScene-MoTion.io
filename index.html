@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<title>UniScene-MoTion: Unified Scene & Motion-aware Diffusion Transition Framework</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+
+<link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+      rel="stylesheet">
+<link rel="stylesheet" href="./static/css/bulma.min.css">
+<link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+<link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+<link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="./static/css/index.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script defer src="./static/js/fontawesome.all.min.js"></script>
+<script src="./static/js/bulma-carousel.min.js"></script>
+<script src="./static/js/bulma-slider.min.js"></script>
+<script src="./static/js/index.js"></script>
+</head>
+
+<body>
+<div class="page-container">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <!-- <img src="static/logo_long.png" style="height:90px"></img> -->
+            <h1 class="title is-1 publication-title">UniScene-MoTion:<br> Unified Scene & Motion-aware<br>Diffusion Transition Framework</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!------------------ BEGIN SECTION ------------------>
+
+    <h2 id="motion_control_container" align="left"><a name="image-results" id="image-results"></a>Challenging Scene Transition & Motion Interpolation Demo Video</h2>
+    <video src="demo\demo1.mp4" class="center-video video-bottom" autoplay loop controls muted></video>
+    <!-- <hr class="hr-gap"> -->
+    <video src="demo\demo2.mp4" class="center-video" autoplay loop controls muted></video>
+    <!------------------ END   SECTION ------------------> 
+
+
+
+    <!------------------ BEGIN SECTION ------------------>
+    <p>&nbsp;</p>
+    <h2 id="motion_control_container" align="left"><a name="image-results" id="image-results"></a>Comparisons with State of the Art</h2>
+    <p align="left">
+      For visual comparison, videos with different frame counts were adjusted in FPS to match durations, without altering content.
+    </p>
+
+    <p style="font-weight: bold;" align="left">Human-centric transitions</p>
+    <div id="results-carousel" class="carousel results-carousel is-human" align="center">
+      <!------------ DEMO1 ------------>
+      <div class="item">
+        <table  width="1000" align="center">
+        <!-- <table width="1000" style="margin-left:0;margin-right:auto;"> -->
+          <tbody>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo1\first_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo1\SEINE.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo1\DynamiCrafter.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo1\TRF.mp4" autoplay loop controls muted/></th>
+              <!-- <th><video  width="200" src="video_comparison\demo1\FCVG.mp4" autoplay loop controls muted/></th> -->
+              <th><video width="200" controls preload="metadata" autoplay muted loop playsinline>
+                <source src="video_comparison\demo1\FCVG.mp4" type="video/mp4">
+              </video></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">First frame</th>
+              <th style="font-size: 16px">SEINE</th>
+              <th style="font-size: 16px">DynamiCrafter</th>
+              <th style="font-size: 16px">TRF</th>
+              <th style="font-size: 16px">FCVG</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; padding-bottom: 7px;"></th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+            </tr>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo1\last_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo1\VideoX-Fun_1.3B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo1\VideoX-Fun_14B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo1\Wan_FLF2V.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo1\UniScene-MoTion.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">Last frame</th>
+              <th style="font-size: 16px">VideoX-Fun 1.3B</th>
+              <th style="font-size: 16px">VideoX-Fun 14B</th>
+              <th style="font-size: 16px">Wan FLF2V</th>
+              <th style="font-size: 16px">UniScene-MoTion</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px"></th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- <hr class="hr-gap"> -->
+
+      <!------------ DEMO2 ------------>
+      <div class="item">
+        <table  width="1000" align="center">
+        <!-- <table width="1000" style="margin-left:0;margin-right:auto;"> -->
+          <tbody>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo2\first_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo2\SEINE.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo2\DynamiCrafter.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo2\TRF.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo2\FCVG.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">First frame</th>
+              <th style="font-size: 16px">SEINE</th>
+              <th style="font-size: 16px">DynamiCrafter</th>
+              <th style="font-size: 16px">TRF</th>
+              <th style="font-size: 16px">FCVG</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; padding-bottom: 7px;"></th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+            </tr>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo2\last_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo2\VideoX-Fun_1.3B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo2\VideoX-Fun_14B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo2\Wan_FLF2V.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo2\UniScene-MoTion.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">Last frame</th>
+              <th style="font-size: 16px">VideoX-Fun 1.3B</th>
+              <th style="font-size: 16px">VideoX-Fun 14B</th>
+              <th style="font-size: 16px">Wan FLF2V</th>
+              <th style="font-size: 16px">UniScene-MoTion</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px"></th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- <hr class="hr-gap"> -->
+
+      <!------------ DEMO3 ------------>
+      <div class="item">
+        <table  width="1000" align="center">
+        <!-- <table width="1000" style="margin-left:0;margin-right:auto;"> -->
+          <tbody>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo3\first_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo3\SEINE.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo3\DynamiCrafter.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo3\TRF.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo3\FCVG.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">First frame</th>
+              <th style="font-size: 16px">SEINE</th>
+              <th style="font-size: 16px">DynamiCrafter</th>
+              <th style="font-size: 16px">TRF</th>
+              <th style="font-size: 16px">FCVG</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; padding-bottom: 7px;"></th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+            </tr>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo3\last_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo3\VideoX-Fun_1.3B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo3\VideoX-Fun_14B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo3\Wan_FLF2V.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo3\UniScene-MoTion.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">Last frame</th>
+              <th style="font-size: 16px">VideoX-Fun 1.3B</th>
+              <th style="font-size: 16px">VideoX-Fun 14B</th>
+              <th style="font-size: 16px">Wan FLF2V</th>
+              <th style="font-size: 16px">UniScene-MoTion</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px"></th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- <hr class="hr-gap"> -->
+
+      <!------------ DEMO4 ------------>
+      <div class="item">
+        <table  width="1000" align="center">
+        <!-- <table width="1000" style="margin-left:0;margin-right:auto;"> -->
+          <tbody>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo4\first_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo4\SEINE.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo4\DynamiCrafter.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo4\TRF.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo4\FCVG.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">First frame</th>
+              <th style="font-size: 16px">SEINE</th>
+              <th style="font-size: 16px">DynamiCrafter</th>
+              <th style="font-size: 16px">TRF</th>
+              <th style="font-size: 16px">FCVG</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; padding-bottom: 7px;"></th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+            </tr>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo4\last_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo4\VideoX-Fun_1.3B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo4\VideoX-Fun_14B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo4\Wan_FLF2V.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo4\UniScene-MoTion.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">Last frame</th>
+              <th style="font-size: 16px">VideoX-Fun 1.3B</th>
+              <th style="font-size: 16px">VideoX-Fun 14B</th>
+              <th style="font-size: 16px">Wan FLF2V</th>
+              <th style="font-size: 16px">UniScene-MoTion</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px"></th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- <hr class="hr-gap"> -->
+
+      <!------------ DEMO5 ------------>
+      <div class="item">
+        <table  width="1000" align="center">
+        <!-- <table width="1000" style="margin-left:0;margin-right:auto;"> -->
+          <tbody>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo5\first_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo5\SEINE.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo5\DynamiCrafter.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo5\TRF.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo5\FCVG.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">First frame</th>
+              <th style="font-size: 16px">SEINE</th>
+              <th style="font-size: 16px">DynamiCrafter</th>
+              <th style="font-size: 16px">TRF</th>
+              <th style="font-size: 16px">FCVG</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; padding-bottom: 7px;"></th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+            </tr>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo5\last_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo5\VideoX-Fun_1.3B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo5\VideoX-Fun_14B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo5\Wan_FLF2V.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo5\UniScene-MoTion.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">Last frame</th>
+              <th style="font-size: 16px">VideoX-Fun 1.3B</th>
+              <th style="font-size: 16px">VideoX-Fun 14B</th>
+              <th style="font-size: 16px">Wan FLF2V</th>
+              <th style="font-size: 16px">UniScene-MoTion</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px"></th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- <hr class="hr-gap"> -->
+
+      <!------------ DEMO6 ------------>
+      <div class="item">
+        <table  width="1000" align="center">
+        <!-- <table width="1000" style="margin-left:0;margin-right:auto;"> -->
+          <tbody>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo6\first_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo6\SEINE.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo6\DynamiCrafter.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo6\TRF.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo6\FCVG.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">First frame</th>
+              <th style="font-size: 16px">SEINE</th>
+              <th style="font-size: 16px">DynamiCrafter</th>
+              <th style="font-size: 16px">TRF</th>
+              <th style="font-size: 16px">FCVG</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; padding-bottom: 7px;"></th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+            </tr>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo6\last_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo6\VideoX-Fun_1.3B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo6\VideoX-Fun_14B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo6\Wan_FLF2V.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo6\UniScene-MoTion.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">Last frame</th>
+              <th style="font-size: 16px">VideoX-Fun 1.3B</th>
+              <th style="font-size: 16px">VideoX-Fun 14B</th>
+              <th style="font-size: 16px">Wan FLF2V</th>
+              <th style="font-size: 16px">UniScene-MoTion</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px"></th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- <hr class="hr-gap"> -->
+
+      <!------------ DEMO11 ------------>
+      <div class="item">
+        <table  width="1000" align="center">
+        <!-- <table width="1000" style="margin-left:0;margin-right:auto;"> -->
+          <tbody>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo11\first_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo11\SEINE.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo11\DynamiCrafter.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo11\TRF.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo11\FCVG.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">First frame</th>
+              <th style="font-size: 16px">SEINE</th>
+              <th style="font-size: 16px">DynamiCrafter</th>
+              <th style="font-size: 16px">TRF</th>
+              <th style="font-size: 16px">FCVG</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; padding-bottom: 7px;"></th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+            </tr>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo11\last_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo11\VideoX-Fun_1.3B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo11\VideoX-Fun_14B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo11\Wan_FLF2V.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo11\UniScene-MoTion.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">Last frame</th>
+              <th style="font-size: 16px">VideoX-Fun 1.3B</th>
+              <th style="font-size: 16px">VideoX-Fun 14B</th>
+              <th style="font-size: 16px">Wan FLF2V</th>
+              <th style="font-size: 16px">UniScene-MoTion</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px"></th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- <hr class="hr-gap"> -->
+
+      <!------------ DEMO12 ------------>
+      <div class="item">
+        <table  width="1000" align="center">
+        <!-- <table width="1000" style="margin-left:0;margin-right:auto;"> -->
+          <tbody>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo12\first_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo12\SEINE.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo12\DynamiCrafter.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo12\TRF.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo12\FCVG.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">First frame</th>
+              <th style="font-size: 16px">SEINE</th>
+              <th style="font-size: 16px">DynamiCrafter</th>
+              <th style="font-size: 16px">TRF</th>
+              <th style="font-size: 16px">FCVG</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; padding-bottom: 7px;"></th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+            </tr>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo12\last_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo12\VideoX-Fun_1.3B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo12\VideoX-Fun_14B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo12\Wan_FLF2V.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo12\UniScene-MoTion.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">Last frame</th>
+              <th style="font-size: 16px">VideoX-Fun 1.3B</th>
+              <th style="font-size: 16px">VideoX-Fun 14B</th>
+              <th style="font-size: 16px">Wan FLF2V</th>
+              <th style="font-size: 16px">UniScene-MoTion</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px"></th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <p style="font-weight: bold;" align="left">Scene-centric transitions</p>
+    <div id="results-carousel" class="carousel results-carousel" align="center">
+      <!------------ DEMO7 ------------>
+      <div class="item">
+        <table  width="1000" align="center">
+        <!-- <table width="1000" style="margin-left:0;margin-right:auto;"> -->
+          <tbody>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo7\first_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo7\SEINE.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo7\DynamiCrafter.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo7\TRF.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo7\FCVG.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">First frame</th>
+              <th style="font-size: 16px">SEINE</th>
+              <th style="font-size: 16px">DynamiCrafter</th>
+              <th style="font-size: 16px">TRF</th>
+              <th style="font-size: 16px">FCVG</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; padding-bottom: 7px;"></th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+            </tr>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo7\last_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo7\VideoX-Fun_1.3B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo7\VideoX-Fun_14B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo7\Wan_FLF2V.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo7\UniScene-MoTion.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">Last frame</th>
+              <th style="font-size: 16px">VideoX-Fun 1.3B</th>
+              <th style="font-size: 16px">VideoX-Fun 14B</th>
+              <th style="font-size: 16px">Wan FLF2V</th>
+              <th style="font-size: 16px">UniScene-MoTion</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px"></th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- <hr class="hr-gap"> -->
+
+      <!------------ DEMO8 ------------>
+      <div class="item">
+        <table  width="1000" align="center">
+        <!-- <table width="1000" style="margin-left:0;margin-right:auto;"> -->
+          <tbody>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo8\first_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo8\SEINE.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo8\DynamiCrafter.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo8\TRF.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo8\FCVG.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">First frame</th>
+              <th style="font-size: 16px">SEINE</th>
+              <th style="font-size: 16px">DynamiCrafter</th>
+              <th style="font-size: 16px">TRF</th>
+              <th style="font-size: 16px">FCVG</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; padding-bottom: 7px;"></th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+            </tr>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo8\last_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo8\VideoX-Fun_1.3B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo8\VideoX-Fun_14B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo8\Wan_FLF2V.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo8\UniScene-MoTion.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">Last frame</th>
+              <th style="font-size: 16px">VideoX-Fun 1.3B</th>
+              <th style="font-size: 16px">VideoX-Fun 14B</th>
+              <th style="font-size: 16px">Wan FLF2V</th>
+              <th style="font-size: 16px">UniScene-MoTion</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px"></th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- <hr class="hr-gap"> -->
+
+      <!------------ DEMO9 ------------>
+      <div class="item">
+        <table  width="1000" align="center">
+        <!-- <table width="1000" style="margin-left:0;margin-right:auto;"> -->
+          <tbody>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo9\first_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo9\SEINE.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo9\DynamiCrafter.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo9\TRF.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo9\FCVG.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">First frame</th>
+              <th style="font-size: 16px">SEINE</th>
+              <th style="font-size: 16px">DynamiCrafter</th>
+              <th style="font-size: 16px">TRF</th>
+              <th style="font-size: 16px">FCVG</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; padding-bottom: 7px;"></th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+            </tr>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo9\last_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo9\VideoX-Fun_1.3B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo9\VideoX-Fun_14B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo9\Wan_FLF2V.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo9\UniScene-MoTion.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">Last frame</th>
+              <th style="font-size: 16px">VideoX-Fun 1.3B</th>
+              <th style="font-size: 16px">VideoX-Fun 14B</th>
+              <th style="font-size: 16px">Wan FLF2V</th>
+              <th style="font-size: 16px">UniScene-MoTion</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px"></th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- <hr class="hr-gap"> -->
+
+      <!------------ DEMO10 ------------>
+      <div class="item">
+        <table  width="1000" align="center">
+        <!-- <table width="1000" style="margin-left:0;margin-right:auto;"> -->
+          <tbody>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo10\first_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo10\SEINE.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo10\DynamiCrafter.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo10\TRF.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo10\FCVG.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">First frame</th>
+              <th style="font-size: 16px">SEINE</th>
+              <th style="font-size: 16px">DynamiCrafter</th>
+              <th style="font-size: 16px">TRF</th>
+              <th style="font-size: 16px">FCVG</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; padding-bottom: 7px;"></th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(16 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+              <th style="font-size: 16px; padding-bottom: 7px;">(25 frames)</th>
+            </tr>
+            <tr>
+              <th><img class="input_image_motion" src="video_comparison\demo10\last_frame.png" alt=""/></th>
+              <th><video  width="200" src="video_comparison\demo10\VideoX-Fun_1.3B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo10\VideoX-Fun_14B.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo10\Wan_FLF2V.mp4" autoplay loop controls muted/></th>
+              <th><video  width="200" src="video_comparison\demo10\UniScene-MoTion.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px; color: #0072B2;font-family: Cavolini;">Last frame</th>
+              <th style="font-size: 16px">VideoX-Fun 1.3B</th>
+              <th style="font-size: 16px">VideoX-Fun 14B</th>
+              <th style="font-size: 16px">Wan FLF2V</th>
+              <th style="font-size: 16px">UniScene-MoTion</th>
+            </tr>
+            <tr>
+              <th style="font-size: 16px"></th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+              <th style="font-size: 16px">(81 frames)</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- <hr class="hr-gap"> -->
+
+    </div>
+
+    <!------------------ END   SECTION ------------------>    
+
+</div>
+
+
+<script>
+  const videoContainer = document.querySelector('.video-container');
+  const video = document.querySelector('video');
+  const hoverImage = document.querySelector('.hover-image');
+  const caption = document.querySelector('.caption');
+
+  videoContainer.addEventListener('mouseenter', () => {
+      video.pause();
+      hoverImage.style.display = 'block';
+      caption.style.display = 'block';
+  });
+
+  videoContainer.addEventListener('mouseleave', () => {
+      video.play();
+      hoverImage.style.display = 'none';
+      caption.style.display = 'none';
+  });
+
+  // for nerfies template
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+
+  gtag('config', 'G-PYVRSFMDRL');
+
+</script>
+
+
+<footer class="footer">
+  <div class="container" style="text-align: left;">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website content is licensed under a <a rel="license"
+                                                href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
+            Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website source code based on the <a href="https://nerfies.github.io/"> Nerfies</a> project page and <a href="https://diffusion-tokenflow.github.io/"> TokenFlow (supp)</a>. If you want to reuse their <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a>, please credit them appropriately.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
